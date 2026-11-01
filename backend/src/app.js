@@ -10,6 +10,9 @@ import { errorHandler, notFound } from "./middleware/error.js";
 
 const app = express();
 
+// Render / Heroku etc. sit behind a proxy: needed so rate limiting sees the real client IP
+if (env.isProd) app.set("trust proxy", 1);
+
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(
   cors({
